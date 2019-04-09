@@ -1,37 +1,4 @@
 <template>
-  <!-- <v-content>
-    <v-container>
-      <p class="title text-xs-left">Log In</p>
-      <v-form
-        ref="form"
-        v-model="valid"
-        lazy-validation
-      >
-        <v-text-field
-          v-model="name"
-          :counter="10"
-          :rules="nameRules"
-          label="Name"
-          required
-        ></v-text-field>
-
-        <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          label="E-mail"
-          required
-        ></v-text-field>
-
-        <v-btn
-          :disabled="!valid"
-          color="success"
-          @click="validate"
-        >
-          Validate
-        </v-btn>
-      </v-form>
-    </v-container>
-  </v-content> -->
   <v-app id="inspire">
     <v-content>
       <v-container fluid fill-height>
@@ -105,7 +72,6 @@ export default {
         const payload = {};
         payload.username = vm.name;
         payload.password = vm.password;
-        console.log('payload', payload);
         vm.$backend.$loginHandle(payload).then((response) => {
           const decoded = JWTDecode(response.accessToken);
           localStorage.setItem('idToken', response.accessToken);
@@ -113,7 +79,6 @@ export default {
           localStorage.setItem('authName', decoded.sub);
           localStorage.setItem('authIat', decoded.iat);
           localStorage.setItem('authExp', decoded.exp);
-          console.log(decoded);
           if (decoded.role === 'admin') {
             this.$router.push({ name: 'home-admin' });
           } else if (decoded.role === 'nonAdmin') {
@@ -123,15 +88,7 @@ export default {
           if (error) {
             vm.errorAlert = true;
             vm.errorAlertContent = 'UnAuthorized User';
-            console.log('error', error);
-            // if (error.response) {
-            console.log(error.response);
-            // } else if (error.request) {
-            //   console.log(error.response);
-            // } else {
-            console.log(error.message);
           }
-          // }
         });
       }
     },
